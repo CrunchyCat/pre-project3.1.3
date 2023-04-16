@@ -20,13 +20,18 @@ import java.security.Principal;
 public class UsersController {
 
     private final UsersRepository usersRepository;
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final UserService userService;
 
+    private final AuthController authController;
 
+    private final RoleService roleService;
     @Autowired
-    public UsersController(UsersRepository usersRepository, UserService userService) {
+    public UsersController(UsersRepository usersRepository, UserService userService, AuthController authController, RoleService roleService) {
         this.usersRepository = usersRepository;
         this.userService = userService;
+        this.authController = authController;
+        this.roleService = roleService;
     }
 
 
@@ -38,6 +43,35 @@ public class UsersController {
         return "users/show";
     }
 
+    
+
+    @GetMapping("/edit")
+    public String edit(Model model, Principal principal) {
+        User user = usersRepository.findByUsername(principal.getName()).get();
+
+        model.addAttribute("user", userService.findOne(user.getId()));
+        return "users/edit";
+    }
+
+
+
+    @PatchMapping()
+    public String update(@ModelAttribute("user") @Valid User user,
+                         BindingResult bindingResult,
+                         Principal principal) {
+
+        if(bindingResult.hasErrors()) {
+            return "users/edit";
+        }
+
+        user.setRoles(roleService.findOne(1));
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
+        User user1 = usersRepository.findByUsername(principal.getName()).get();
+        userService.update(user1.getId(), user);
+        return authController.loginPage();
+
+    }
 
 
     @DeleteMapping()
