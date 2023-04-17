@@ -43,7 +43,6 @@ public class AdminController {
 
     @GetMapping("/new")
     public String newPerson(@ModelAttribute("user") User user) {
-
         return "admin/new";
     }
 

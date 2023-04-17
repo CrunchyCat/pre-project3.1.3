@@ -69,8 +69,7 @@ public class UsersController {
         user.setRoles(roleService.findOne(1));
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
-        User user1 = usersRepository.findByUsername(principal.getName()).get();
-        userService.update(user1.getId(), user);
+        userService.update(usersRepository.findByUsername(principal.getName()).get().getId(), user);
         return authController.loginPage();
     }
 
