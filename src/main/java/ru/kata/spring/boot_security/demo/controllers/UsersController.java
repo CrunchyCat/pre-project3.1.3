@@ -43,7 +43,7 @@ public class UsersController {
         return "users/show";
     }
 
-    
+
 
     @GetMapping("/edit")
     public String edit(Model model, Principal principal) {
