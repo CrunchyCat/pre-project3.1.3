@@ -72,7 +72,6 @@ public class UsersController {
         User user1 = usersRepository.findByUsername(principal.getName()).get();
         userService.update(user1.getId(), user);
         return authController.loginPage();
-
     }
 
 

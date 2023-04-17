@@ -52,12 +52,9 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "admin/new";
         }
-
         user.setRoles(roleService.findOne(1));
-
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
-
         userService.save(user);
         return "redirect:/admin";
 
