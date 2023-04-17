@@ -3,14 +3,13 @@ package ru.kata.spring.boot_security.demo.models;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Collectors;
+
 
 
 @Entity
@@ -109,7 +108,7 @@ public class User implements UserDetails {
 
 
 
-    //--------------------Метод для добавления роли в колекшн буду  использовать в регистрацции что бы
+    //--------------------Метод для добавления роли в колекшн буду  использовать в регистрации что бы
     //по умолчанию задать роль
 
     public void setRoles(Role role) {
@@ -118,17 +117,9 @@ public class User implements UserDetails {
 
 
 
-
-
-
-    //----------------------------UserDetails-------------------------------
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        return this.roles.stream()
-                .map(r -> new SimpleGrantedAuthority(r.getAuthority()))
-                .collect(Collectors.toList());
+        return this.roles;
     }
 
 

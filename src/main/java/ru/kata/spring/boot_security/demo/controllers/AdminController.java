@@ -1,8 +1,6 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,8 +15,6 @@ import javax.validation.Valid;
 @RequestMapping("/admin")
 public class AdminController {
     private final UserService userService;
-
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     private final RoleService roleService;
 
@@ -52,11 +48,8 @@ public class AdminController {
             return "admin/new";
         }
         user.setRoles(roleService.findOne(1));
-        String hashedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(hashedPassword);
         userService.save(user);
         return "redirect:/admin";
-
     }
 
     @GetMapping("/{id}/edit")
@@ -75,7 +68,6 @@ public class AdminController {
         }
         userService.update(id, user);
         return "redirect:/admin";
-
     }
 
 

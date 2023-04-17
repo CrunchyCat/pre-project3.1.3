@@ -9,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.UsersRepository;
-import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 import javax.validation.Valid;
@@ -20,20 +19,16 @@ import java.security.Principal;
 public class UsersController {
 
     private final UsersRepository usersRepository;
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final UserService userService;
-
     private final AuthController authController;
 
-    private final RoleService roleService;
 
 
     @Autowired
-    public UsersController(UsersRepository usersRepository, UserService userService, AuthController authController, RoleService roleService) {
+    public UsersController(UsersRepository usersRepository, UserService userService, AuthController authController) {
         this.usersRepository = usersRepository;
         this.userService = userService;
         this.authController = authController;
-        this.roleService = roleService;
     }
 
 
@@ -50,7 +45,6 @@ public class UsersController {
     @GetMapping("/edit")
     public String edit(Model model, Principal principal) {
         User user = usersRepository.findByUsername(principal.getName()).get();
-
         model.addAttribute("user", userService.findOne(user.getId()));
         return "users/edit";
     }
@@ -65,10 +59,6 @@ public class UsersController {
         if(bindingResult.hasErrors()) {
             return "users/edit";
         }
-
-        user.setRoles(roleService.findOne(1));
-        String hashedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(hashedPassword);
         userService.update(usersRepository.findByUsername(principal.getName()).get().getId(), user);
         return authController.loginPage();
     }
@@ -80,5 +70,4 @@ public class UsersController {
         userService.delete(user.getId());
         return "redirect:/";
     }
-
 }

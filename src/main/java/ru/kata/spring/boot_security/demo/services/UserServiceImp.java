@@ -1,12 +1,10 @@
 package ru.kata.spring.boot_security.demo.services;
 
-import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.UsersRepository;
 
@@ -18,9 +16,14 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class UserServiceImp implements UserService {
 
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    private final RoleService roleService;
+
     private final UsersRepository usersRepository;
     @Autowired
-    public UserServiceImp(UsersRepository usersRepository) {
+    public UserServiceImp(RoleService roleService, UsersRepository usersRepository) {
+        this.roleService = roleService;
         this.usersRepository = usersRepository;
     }
     @Override
@@ -35,12 +38,15 @@ public class UserServiceImp implements UserService {
     @Override
     @Transactional
     public void save(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         usersRepository.save(user);
     }
     @Override
     @Transactional
     public void update(int id, User updateUser) {
         updateUser.setId(id);
+        updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+        updateUser.setRoles(roleService.findOne(1));
         usersRepository.save(updateUser);
     }
     @Override
