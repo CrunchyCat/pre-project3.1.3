@@ -28,7 +28,6 @@ public class AuthController {
 
     @GetMapping("/login")
     public String loginPage() {
-
         return "auth/login";
     }
 
@@ -48,11 +47,7 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             return "/auth/registration";
         }
-
         registrationService.register(user);
-
         return "redirect:/auth/login";
     }
-
-
 }
