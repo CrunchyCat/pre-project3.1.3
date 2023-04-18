@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class UserValidatorServiceImp implements UserValidatorService {
 
-    private UsersRepository usersRepository;
+    private final UsersRepository usersRepository;
     @Autowired
     public UserValidatorServiceImp(UsersRepository usersRepository) {
 

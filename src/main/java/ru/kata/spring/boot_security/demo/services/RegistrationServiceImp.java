@@ -31,7 +31,6 @@ public class RegistrationServiceImp implements RegistrationService {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
 
 
-
         user.setRoles(roleService.findOne(1));
 
         user.setPassword(encodedPassword);

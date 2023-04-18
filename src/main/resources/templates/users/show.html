@@ -9,11 +9,6 @@
 <p th:text="${'Email: ' + user.getEmail()}">VALUE</p>
 <p th:text="${user.getId()}">VALUE</p>
 
-<a th:href="@{/user/edit}">Edit</a>
-
-<form th:method="DELETE" th:action="@{/user}">
-  <input type="submit" value="Delete!"/>
-</form>
 
 <form th:action="@{/logout}" th:method="POST">
   <input type="submit" value="Logout">

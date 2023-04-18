@@ -25,12 +25,10 @@ public class AuthController {
         this.registrationService = registrationService;
     }
 
-
     @GetMapping("/login")
     public String loginPage() {
         return "auth/login";
     }
-
 
     @GetMapping("/registration")
     public String registrationPage(@ModelAttribute("user") User user) {
