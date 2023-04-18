@@ -2,10 +2,9 @@ package ru.kata.spring.boot_security.demo.models;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.kata.spring.boot_security.demo.services.RoleService;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -103,11 +102,6 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public Collection<Role> getRoles() {
-        return roles;
-    }
-
-
 
 
     //--------------------Метод для добавления роли в колекшн буду  использовать в регистрации что бы
@@ -118,13 +112,17 @@ public class User implements UserDetails {
     }
 
 
+    //метод для вывода коллекции ролей без []
+    public String getToStringRoleCollection() {
+        return roles.toString().replace("]", "").replace("[", "");
+    }
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles;
     }
-
-
 
     @Override
     public String getPassword() {

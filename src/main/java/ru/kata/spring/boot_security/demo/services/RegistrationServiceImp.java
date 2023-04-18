@@ -29,12 +29,8 @@ public class RegistrationServiceImp implements RegistrationService {
     @Override
     public void register(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
-
-
         user.setRoles(roleService.findOne(1));
-
         user.setPassword(encodedPassword);
         usersRepository.save(user);
     }
-
 }

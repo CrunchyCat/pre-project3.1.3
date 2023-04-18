@@ -26,11 +26,14 @@ public class Role implements GrantedAuthority {
     }
 
 
-    //------------------------GrantedAuthority-----------------------
     @Override
     public String getAuthority() {
         return name;
     }
 
-
+    //метод для вывода роли без ROLE_
+    @Override
+    public String toString() {
+        return this.name.replace("ROLE_", "");
+    }
 }

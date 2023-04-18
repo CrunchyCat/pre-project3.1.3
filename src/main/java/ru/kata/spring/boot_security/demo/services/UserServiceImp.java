@@ -65,7 +65,9 @@ public class UserServiceImp implements UserService {
     @Transactional
     public void delete(int id) {
         User user = findOne(id);
-        user.getRoles().clear();
+
+        user.getAuthorities().clear();
+
         usersRepository.save(user);
         usersRepository.deleteById(id);
     }
