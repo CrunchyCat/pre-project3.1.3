@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 import javax.validation.Valid;
@@ -16,12 +15,9 @@ import javax.validation.Valid;
 public class AdminController {
     private final UserService userService;
 
-    private final RoleService roleService;
-
     @Autowired
-    public AdminController(UserService userService, RoleService roleService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
-        this.roleService = roleService;
     }
 
 
@@ -39,15 +35,18 @@ public class AdminController {
 
     @GetMapping("/new")
     public String newPerson(@ModelAttribute("user") User user) {
+
         return "admin/new";
     }
 
+
     @PostMapping()
-    public String create(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+    public String create(@ModelAttribute("user") @Valid User user,
+                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "admin/new";
         }
-        user.setRoles(roleService.findOne(1));
+
         userService.save(user);
         return "redirect:/admin";
     }

@@ -18,13 +18,10 @@ public class UserServiceImp implements UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final RoleService roleService;
-
     private final UsersRepository usersRepository;
     @Autowired
-    public UserServiceImp(PasswordEncoder passwordEncoder, RoleService roleService, UsersRepository usersRepository) {
+    public UserServiceImp(PasswordEncoder passwordEncoder, UsersRepository usersRepository) {
         this.passwordEncoder = passwordEncoder;
-        this.roleService = roleService;
         this.usersRepository = usersRepository;
     }
     @Override
@@ -55,12 +52,13 @@ public class UserServiceImp implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         usersRepository.save(user);
     }
+
+
     @Override
     @Transactional
     public void update(int id, User updateUser) {
         updateUser.setId(id);
         updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
-        updateUser.setRoles(roleService.findOne(1));
         usersRepository.save(updateUser);
     }
     @Override

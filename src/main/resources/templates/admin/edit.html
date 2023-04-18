@@ -29,6 +29,16 @@
   <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Invalid password</div>
   <br/>
 
+  <label for="roles">Roles: </label>
+  <select id="roles" name="roles" class="form-control">
+    <option value="1">User</option>
+    <option value="2">Admin</option>
+  </select>
+  <br/>
+
+
+
+
   <input type="submit" value="Update"/>
 
 </form>

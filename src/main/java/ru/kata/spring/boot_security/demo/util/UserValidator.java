@@ -32,7 +32,6 @@ public class UserValidator implements Validator {
             return;
         }
 
-
         errors.rejectValue("username", "",
                 "A person with this username exists.");
 

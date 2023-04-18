@@ -23,4 +23,5 @@ public class RoleServiceImp implements RoleService{
         Optional<Role> role  = rolesRepository.findById(id);
         return role.orElse(null);
     }
+
 }

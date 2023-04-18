@@ -14,5 +14,4 @@ public interface UsersRepository extends JpaRepository<User, Integer> {
     @Query("SELECT u from User u left join fetch u.roles where u.username=:username")
     Optional<User> findByUsername(@Param("username") String username);
 
-
 }

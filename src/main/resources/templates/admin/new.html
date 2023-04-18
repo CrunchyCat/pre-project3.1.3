@@ -12,7 +12,7 @@
   <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Invalid name</div>
   <br/>
 
-  <label for="age">Enter year age </label>
+  <label for="age">Enter year age: </label>
   <input type="text" th:field="*{age}" id="age"/>
   <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age is incorrect</div>
   <br/>
@@ -29,7 +29,22 @@
   <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Invalid password</div>
   <br/>
 
-  <input type="submit" value="Crate"/>
+
+
+
+  <label for="roles">Roles: </label>
+  <select id="roles" name="roles" class="form-control">
+    <option value="1">User</option>
+    <option value="2">Admin</option>
+  </select>
+  <br/>
+
+
+
+
+
+
+  <input type="submit" value="Create"/>
 
 </form>
 

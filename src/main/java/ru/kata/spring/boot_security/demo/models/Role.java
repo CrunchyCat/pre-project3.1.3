@@ -21,6 +21,11 @@ public class Role implements GrantedAuthority {
     }
 
 
+    public Role(String name) {
+        this.name = name;
+    }
+
+
     //------------------------GrantedAuthority-----------------------
     @Override
     public String getAuthority() {
@@ -28,10 +33,4 @@ public class Role implements GrantedAuthority {
     }
 
 
-    //---------------Getter/Setter-----------------------------------
-
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

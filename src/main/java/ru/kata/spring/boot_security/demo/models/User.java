@@ -2,8 +2,10 @@ package ru.kata.spring.boot_security.demo.models;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.kata.spring.boot_security.demo.services.RoleService;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
